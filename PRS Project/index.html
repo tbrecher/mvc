@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>P,R,S - Client</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <img src="Images/PRSimage.jpg" alt="PRS Logo" width="75" height="75"></img>
+  </header>
+  <h1>Rock, Paper, Scissors!!!</h1>
+  <a href = "rules.html">Show Rules</a>
+  <a href = "stats.html">Show Stats</a>
+  <div id="feedback">
+    <h2><span class = "feedback_span"></span></h2>
+  </div>
+  <div id="enter_name" class="hidden">
+    <h2>Welcome to Rock, Paper, Scissors!</h2>
+    It seems this is your first time playing!<br></br>
+    Enter your name:<input type="text" id="enter_name_input">
+    <button id = "enter_name_button">Submit Name</button>
+  </div>
+  <div id="throw_choice" class="hidden">
+    <h2>Play the Game</h2>
+    <h4><span class="player_name_span"></span>, it's your turn to bust a move!</h4>
+    Choose your weapon:
+    <select id = "player_throw_choice">
+      <option value=" "> </option>
+      <option value="Rock">Rock</option>
+      <option value="Paper">Paper</option>
+      <option value="Scissors">Scissors</option>
+    </select>
+    <button id = "throw_choice_button">Throw Choice</button>
+  </div>
+  <div id="game_results" class = "hidden">
+    <input id = "player_image" type = "image" width = "150" height = "50">
+    <input id = "opponent_image" type = "image" width = "150" height = "50">
+    <h2><span class="result_span"></span></h2>
+    <h4>You chose: <span class="player_choice_span"></span></h4>
+    <h4>The computer chose: <span class="opponent_choice_span"></span></h4>
+    <button id = "play_again_button">Click Here to Play Again!</button>
+  </div>
+  <footer>
+    Made by Tommy Brecher - November 2, 2018
+  </footer>
+  <script src="scripts.js"></script>
+</body>
+
+</html>

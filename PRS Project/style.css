@@ -1,0 +1,50 @@
+body{
+  background-color: #000066;
+}
+
+header{
+  margin-left: 600px;
+}
+
+h1 {
+  color: #000000;
+  background-color: #1eb19d;
+  text-align: center;
+}
+
+div {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: 100px;
+  margin-left: 100px;
+  background-color: #ffcc00;
+}
+
+table, th, td {
+   border: 1px solid black;
+}
+.top_row{
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.good{
+  background-color: #33cc33;
+}
+
+.bad{
+  background-color: #ff0000;
+}
+
+.hidden{
+  display: none;
+}
+
+.visible{
+  display:block;
+}
+
+footer{
+  color: #ffffff;
+  margin-left: 500px;
+}

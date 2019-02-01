@@ -13,9 +13,12 @@
   </div>
   <div id="enter_name">
     <h2>User Details - <%=user.name%></h2>
+    <form action="/user/<%user.name%>" method "post">
     <br>
-    Name: <%=user.name%><br>
-    Password: <%=user.password%><br>
+    Name: <input type="text" name="username" value="<%=user.name%>"<br>
+    Password: <input type="text" name="password" value="if(user.password){<%=user.password%>}"<br>
+  </form>
+    <button type="submit" id = "enter_name_button">Submit New User</button>
     <br>
   </div>
   <footer>

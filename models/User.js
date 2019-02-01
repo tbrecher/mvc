@@ -41,6 +41,7 @@ var getAllDatabaseRows= function(){
   return fs.readFileSync(__dirname +'/../data/users.csv', 'utf8').split('\n');
 }
 
+
 var createBlankUser= function(){
   var user={
     name:"test",

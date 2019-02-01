@@ -7,6 +7,8 @@ app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/images/logo.png'));
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.use(require('./controllers/user'));
 var Users = require(__dirname +'/models/User');
@@ -54,6 +56,12 @@ app.get('/rules', function(request, response){
   response.render('rules');
 });
 
+app.get('/user/new', function(request, response){
+  console.log('Request- user_details');
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  response.render('user_details');
+});
 app.get('/stats', function(request, response){
   var userData = loadCSV('data/users.csv');
   var villainData = loadCSV('data/villains.csv');

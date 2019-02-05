@@ -185,6 +185,50 @@ app.get('/about', function(request, response){
   response.render('about');
 });
 
+app.get('/play_again', function(request, response){
+  var data=loadCSV("data/users.csv");
+    var new_user=true;
+    for(var i=0; i<data.length;i++){
+      if(request.query.player_name==data[i]["name"]){
+        new_user=false;
+        if(request.query.password==data[i]["password"]){
+          var user_data={};
+          user_data.name=data[i].name;
+          response.status(200);
+          response.setHeader('Content-Type', 'text/html')
+          response.render('game', {user:user_data});
+          break;
+        }
+        else{
+          response.status(200);
+          response.setHeader('Content-Type', 'text/html')
+          response.render('error');
+          break;
+        }
+      }
+    }
+        if(new_user){
+            var user={};
+            user["name"] = request.query.player_name;
+            user["password"] = request.query.password;
+            user["win"] = 0;
+            user["lose"] = 0;
+            user["tie"] = 0;
+            user["rock"] = 0;
+            user["paper"] = 0;
+            user["scissors"] = 0;
+            data.push(user);
+
+
+        var user_data={};
+        user_data.name=user.name;
+        writeCSV(data, "data/users.csv");
+        response.status(200);
+        response.setHeader('Content-Type', 'text/html');
+        response.render('game', {user:user_data});
+  }
+});
+
 function loadCSV(file) {
   var data = fs.readFileSync(file, "utf8"); //load csv
   var rows = data.split('\n'); //parse csv

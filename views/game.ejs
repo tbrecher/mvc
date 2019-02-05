@@ -15,16 +15,53 @@
       <h4><%=user.name%> it's your turn to bust a move!</h4>
       <form action="<%=user.name%>/results" method="get">
         Enter your choice of weapon:<br>
+
         <select name="weapon">
           <option value=" "> </option>
           <option value="paper">Paper</option>
           <option value="rock">Rock</option>
           <option value="scissors">Scissors</option>
+
+        </select>
+        <br>
+        Pick your opponent:
+        <br>
+
+        <select id="opponentDrop" name="villain">
+          <option value="blank"> </option>
+          <option value="bones">Bones</option>
+          <option value="comic_hans">Comic Hans</option>
+          <option value="gato">Gato</option>
+          <option value="harry">Harry</option>
+          <option value="manny">Manny</option>
+          <option value="mickey">Mickey</option>
+          <option value="mr_modern">Mr. Modern</option>
+          <option value="pixie">Pixie</option>
+          <option value="regal">Regal</option>
+          <option value="spock">Spock</option>
+          <option value="the_boss">The Boss</option>
+          <option value="the_magician">The Magician</option>
         </select><br>
-        <button type = "submit" id="throw_choice_button">Throw Choice</button>
+        <button type = "submit" id="throw_choice_button">Submit</button>
+
+        <img id="PlayerWaiting" src="images/player_waiting.png" width="200" height="200" align="right">
+        <img id="blank_waiting" src="images/VillainWaiting.png" width="200" height="200" align="left" class="hidden villain_pictures">
+        <img id="bones_waiting" src="images/bones_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="comic_hans_waiting" src="images/comic_hans_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="gato_waiting" src="images/gato_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="harry_waiting" src="images/harry_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="manny_waiting" src="images/manny_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="mickey_waiting" src="images/mickey_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="mr_modern_waiting" src="images/mr_modern_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="pixie_waiting" src="images/pixie_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="regal_waiting" src="images/regal_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="spock_waiting" src="images/spock_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="the_boss_waiting" src="images/the_boss_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+        <img id="the_magician_waiting" src="images/the_magician_waiting.svg" width="200" height= "200" align="left" class="hidden villain_pictures">
+
       </form>
     </div>
   <% include global/footer %>
-  <script src="scripts/scripts.js"></script>
+  <script src="scripts/gameScripts.js"></script>
  </body>
 </html>

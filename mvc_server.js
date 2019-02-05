@@ -29,24 +29,132 @@ app.get('/', function(request, response){
 app.get('/login', function(request, response){
   console.log('Request- login');
 
-  var u = Users.getUser(request.query.player_name);
+  var data=loadCSV("data/users.csv");
+    var new_user=true;
+    for(var i=0; i<data.length;i++){
+      if(request.query.player_name==data[i]["name"]){
+        new_user=false;
+        if(request.query.password==data[i]["password"]){
+          var user_data={};
+          user_data.name=data[i].name;
+          response.status(200);
+          response.setHeader('Content-Type', 'text/html')
+          response.render('game', {user:user_data});
+          break;
+        }
+        else{
+          response.status(200);
+          response.setHeader('Content-Type', 'text/html')
+          response.render('error');
+          break;
+        }
+      }
+    }
+        if(new_user){
+            var user={};
+            user["name"] = request.query.player_name;
+            user["password"] = request.query.password;
+            user["win"] = 0;
+            user["lose"] = 0;
+            user["tie"] = 0;
+            user["rock"] = 0;
+            user["paper"] = 0;
+            user["scissors"] = 0;
+            data.push(user);
 
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.render('game', {user:u});
+
+        var user_data={};
+        user_data.name=user.name;
+        writeCSV(data, "data/users.csv");
+        response.status(200);
+        response.setHeader('Content-Type', 'text/html');
+        response.render('game', {user:user_data});
+  }
 });
+
 
 app.get('/:user/results', function(request, response){
   console.log('Request- /'+request.params.user+'/results');
 
+  var stuff = gameResult(request.query.weapon,request.query.villain)
   var user_data={
       name: request.params.user,
-      weapon: request.query.weapon
+      weapon: request.query.weapon,
+      villain: request.query.villain,
+      result: stuff[1],
+      villainWeapon: stuff[0]
   };
+
+  var usersCSV = loadCSV("data/users.csv");
+
+  for(var i = 0; i < usersCSV.length; i++){
+    if(usersCSV[i]["name"] == user_data.name){
+      if(user_data.weapon == "rock"){
+        usersCSV[i]["rock"] += 1;
+      }if(user_data.weapon == "paper"){
+        usersCSV[i]["paper"] += 1;
+      }if(user_data.weapon == "scissors"){
+        usersCSV[i]["scissors"] += 1;
+      }
+      if(stuff[1]=="tie"){
+        usersCSV[i]["tie"] += 1;
+      } if(stuff[1]=="lose"){
+        usersCSV[i]["lose"] += 1;
+      } if(stuff[1]=="win"){
+        usersCSV[i]["win"]+=1;
+      }
+
+        var all = usersCSV[i]["win"]+usersCSV[i]["lose"]+ usersCSV[i]["tie"];
+        usersCSV[i]["winLoss"]=parseFloat(usersCSV[i]["win"]/all);
+
+
+    }
+  }
+
+  //for (i=1; i<usersCSV.length/8; i++){
+  //  usersCSV[i*8].concat("\n");
+  //}
+  writeCSV(usersCSV, "data/users.csv");
+
+  var villainsCSV = loadCSV("data/villains.csv");
+//console.log("this is the villainsCSV");
+//console.log(villainsCSV)
+  for(var i = 0; i < villainsCSV.length; i++){
+    //console.log("csv: "+ villainsCSV[i]["name"].toLowerCase());
+    //console.log("userdata: "+ user_data.villain.toLowerCase());
+
+    if(villainsCSV[i]["name"].toLowerCase() == user_data.villain.toLowerCase()){
+      //console.log(user_data.villain);
+      //console.log(stuff);
+      if(stuff[0] == "rock"){
+        villainsCSV[i]["rock"] += 1;
+      }if(stuff[0] == "paper"){
+        villainsCSV[i]["paper"] += 1;
+      }if(stuff[0] == "scissors"){
+        villainsCSV[i]["scissors"] += 1;
+      }
+      if(stuff[1]=="tie"){
+        villainsCSV[i]["tie"] += 1;
+      } if(stuff[1]=="lose"){
+        villainsCSV[i]["win"] += 1;
+      } if(stuff[1]=="win"){
+        villainsCSV[i]["lose"]+=1;
+      }
+      var all = villainsCSV[i]["win"]+villainsCSV[i]["lose"]+ villainsCSV[i]["tie"];
+      villainsCSV[i]["winLoss"]=parseFloat(villainsCSV[i]["win"]/all);
+
+
+    }
+  }
+  //console.log(villainsCSV)
+  //for (i=1; i<villainsCSV.length/7; i++){
+  //  villainsCSV[i*7].concat("\n");
+  //}
+  writeCSV(villainsCSV, "data/villains.csv")
 
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
-  response.send(JSON.stringify(user_data));
+  response.render('results', {user:user_data});
 });
 
 app.get('/rules', function(request, response){
@@ -227,4 +335,18 @@ function strategy(weapon,villain){
   else{
     return "rock";
   }
+}
+function gameResult(weapon,villain){
+  var villainWeapon = strategy(weapon,villain);
+  var villainStuff = []
+  if(villainWeapon=="rock" && weapon=="rock" || villainWeapon=="paper" && weapon=="paper" || villainWeapon=="scissors" && weapon=="scissors"){
+    villainStuff=[villainWeapon,"tie"];
+  }
+  if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
+    villainStuff=[villainWeapon,"lose"];
+  }
+  if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
+    villainStuff=[villainWeapon,"win"];
+  }
+  return villainStuff;
 }

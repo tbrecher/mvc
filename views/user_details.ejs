@@ -17,13 +17,11 @@
     <br>
     Name: <input type="text" name="username" value="<%=user.name%>"<br>
     Password: <input type="text" name="password" value="if(user.password){<%=user.password%>}"<br>
-  </form>
-    <button type="submit" id = "enter_name_button">Submit New User</button>
+    <button type="submit" id = "new_user_button">Submit New User</button>
+      </form>
     <br>
   </div>
-  <footer>
-    Brought to you by the cool kids of Software Engineering - Fall, 2018.
-  </footer>
+<% include global/footer %>
   <script src="scripts/scripts.js"></script>
  </body>
 </html>

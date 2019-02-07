@@ -1,24 +1,10 @@
-var player_name = localStorage.getItem("player_name");
 
-if(!player_name){
-  showOrNot(document.getElementById("enter_name"), true);
-}
-else {
-  updateNames(player_name);
-  showOrNot(document.getElementById("throw_choice"), true);
-}
+
 
 ///////////////////Event Listions//////////////////
-toggleVisibility(document.getElementById("show_rules_button"), document.getElementById("rules"));
-toggleVisibility(document.getElementById("show_stats_button"), document.getElementById("stats"));
 
-document.getElementById("enter_name_button").addEventListener("click", function(){
-  var p_name=document.getElementById("enter_name_input").value;
-  localStorage.setItem("player_name",p_name);
-  showOrNot(document.getElementById("enter_name"), false);
-  showOrNot(document.getElementById("throw_choice"), true);
-  updateNames(p_name);
-});
+
+
 
 ///////////////////Helper function//////////////////
 function updateNames(name){

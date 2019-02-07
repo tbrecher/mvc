@@ -1,14 +1,4 @@
-var player_name = localStorage.getItem("player_name");
 
-
-///////////////////Event Listions//////////////////
-document.getElementById("enter_name_button").addEventListener("click", function(){
-  var p_name=document.getElementById("enter_name_input").value;
-  localStorage.setItem("player_name",p_name);
-  showOrNot(document.getElementById("enter_name"), false);
-  showOrNot(document.getElementById("throw_choice"), true);
-  updateNames(p_name);
-});
 
 ///////////////////Helper function//////////////////
 function updateNames(name){

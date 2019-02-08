@@ -16,7 +16,7 @@
     <form action="/user/<%user.name%>" method "post">
     <br>
     Name: <input type="text" name="username" value="<%=user.name%>"<br>
-    Password: <input type="text" name="password" value="if(user.password){<%=user.password%>}"<br>
+    Password: <input type="text" name="password" value="if(user.password){<%=user.password%>} else{""}"<br>
     <button type="submit" id = "new_user_button">Submit New User</button>
       </form>
     <br>

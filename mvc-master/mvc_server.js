@@ -85,6 +85,14 @@ app.get('/:user/results', function(request, response){
       villainWeapon: stuff[0]
   };
 
+  app.get('/users/:id',function(request, response){
+    console.log('Request- /'+request.params.user+'/edit');
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.render('user_details');
+
+  });
+
   var usersCSV = loadCSV("data/users.csv");
 
   for(var i = 0; i < usersCSV.length; i++){

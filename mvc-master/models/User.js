@@ -1,4 +1,10 @@
-var fs = require("fs");
+
+var GoogleSpreadsheet = require('google-spreadsheet');
+
+var creds = require('./client_secret.json');
+// Create a document object using the ID of the spreadsheet - obtained from its URL.
+
+var doc = new GoogleSpreadsheet('*spreadsheet ID*');
 
 exports.getUser = function(user_id) {
   console.log("Users.getUser: "+user_id);
@@ -38,7 +44,12 @@ exports.createUser = function(user_name, user_password){
 }
 
 var getAllDatabaseRows= function(){
-  return fs.readFileSync(__dirname +'/../data/users.csv', 'utf8').split('\n');
+  doc.useServiceAccountAuth(creds, function (err) {
+  // Get all of the rows from the spreadsheet.
+    doc.getRows(1, function (err, rows) {
+      console.log(rows);
+    });
+  });
 }
 
 

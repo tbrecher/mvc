@@ -27,14 +27,13 @@
            <%=users[i]["games played"]%>
           </td>
           <td>
-          <%=users[i]["games won"]/users[i]["games played"]*100%>%
+          <%=users[i]["win"]/users[i]["games played"]*100%>%
          </td>
          <td>
-         <%=users[i]["games lost"]/users[i]["games played"]*100%>%
+         <%=users[i]["lose"]/users[i]["games played"]*100%>%
         </td>
         <td>
-        <%var tie_amount = users[i]["games played"]-(users[i]["games won"]+users[i]["games lost"]);%>
-        <%=tie_amount/users[i]["games played"]*100%>%
+        <%var tie_amount = users[i]["tie"]*100%>%
        </td>
         </tr>
       <%}%>
@@ -55,17 +54,16 @@
           <%=villains[i].name%>
          </td>
           <td>
-           <%=villains[i]["games played"]%>
+           <%=villains[i]["gamesPlayed"]%>
           </td>
           <td>
-          <%=villains[i]["games won"]/villains[i]["games played"]*100%>%
+          <%=villains[i]["win"]/villains[i]["gamesPlayed"]*100%>%
          </td>
          <td>
-         <%=villains[i]["games lost"]/villains[i]["games played"]*100%>%
+         <%=villains[i]["lose"]/villains[i]["gamesPlayed"]*100%>%
         </td>
         <td>
-        <%var tie_amount = villains[i]["games played"]-(villains[i]["games won"]+villains[i]["games lost"]);%>
-        <%=tie_amount/villains[i]["games played"]*100%>%
+        <%var tie_amount = villains[i]["tie"]*100%>%
        </td>
         </tr>
       <%}%>

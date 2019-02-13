@@ -60,6 +60,7 @@ app.get('/login', function(request, response){
             user["rock"] = 0;
             user["paper"] = 0;
             user["scissors"] = 0;
+            user["gamesPlayed"]=0;
             data.push(user);
 
 

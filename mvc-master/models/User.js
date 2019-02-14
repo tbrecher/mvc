@@ -56,22 +56,22 @@ exports.createUser = function(user_name, user_password){
 }
 
 var getAllDatabaseRows= function(callback){//parameter of function is a function
-  doc.useServiceAccountAuth(creds, function (err) {
-  // Get all of the rows from the spreadsheet.
-    doc.getRows(1, function (err, rows) {
-      callback(rows);
-    });
-  });
+ doc.useServiceAccountAuth(creds, function (err) {
+  //Get all of the rows from the spreadsheet.
+   doc.getRows(1, function (err, rows) {
+    callback(rows);
+   });
+ });
 }
 
 
 var createBlankUser= function(){
   var user={
-    name:"test",
-    games_played:"test",
-    lost:"test",
-    won:"test",
-    password:"test"
+    name:"",
+    games_played:"0",
+    lost:"0",
+    won:"0",
+    password:""
   };
   return user;
 }

@@ -93,6 +93,14 @@ app.get('/:user/results', function(request, response){
     response.render('user_details');
 
   });
+  app.get('/user/new',function(request, response){
+    console.log('Request- /new user');
+    var u=User.createBlankUser();
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.render('user_details');
+
+  });
 
   var usersCSV = loadCSV("data/users.csv");
 

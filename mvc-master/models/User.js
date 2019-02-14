@@ -6,6 +6,18 @@ var creds = require('./client_secret.json');
 
 var doc = new GoogleSpreadsheet('*spreadsheet ID*');
 
+exports.getUsers=function(callback){
+getAllDatabaseRows(function(users){
+  callback(users);
+})
+}
+
+//exports.getUserbyName=function(callback){
+  //exports.getUsers(function(user_data){
+  ///  for loop
+        //callback(user_data)
+  //}
+//}
 exports.getUser = function(user_id) {
   console.log("Users.getUser: "+user_id);
 
@@ -43,11 +55,11 @@ exports.createUser = function(user_name, user_password){
   //fill
 }
 
-var getAllDatabaseRows= function(){
+var getAllDatabaseRows= function(callback){//parameter of function is a function
   doc.useServiceAccountAuth(creds, function (err) {
   // Get all of the rows from the spreadsheet.
     doc.getRows(1, function (err, rows) {
-      console.log(rows);
+      callback(rows);
     });
   });
 }
@@ -63,3 +75,6 @@ var createBlankUser= function(){
   };
   return user;
 }
+//callback=function meant to be called as soon as function is finished
+//helps with timing, need to reorganize w callbacks to use google sheets
+//dont have to worry about parsing the data

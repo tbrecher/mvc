@@ -52,6 +52,13 @@ exports.deleteUser = function(user_id){
 }
 
 exports.createUser = function(user_name, user_password){
+  var user={
+    name:user_name,
+    password: user_password,
+    games_played:"0",
+    lost:"0",
+    won:"0",
+  };
   //fill
 }
 

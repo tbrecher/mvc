@@ -101,6 +101,14 @@ app.get('/:user/results', function(request, response){
     response.render('user_details');
 
   });
+  app.post('/user', function(request,response){
+  console.log("Post- new user");
+  User.createUser(request.body.name,request.body.password);
+
+
+})//user.js method for new user and input parameters
+  //app.put presentation
+  //
 
   var usersCSV = loadCSV("data/users.csv");
 

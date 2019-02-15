@@ -13,12 +13,12 @@
   </div>
   <div id="enter_name">
     <h2>User Details - <%=user.name%></h2>
-    <form action="/user/<%user.name%>" method "post">
+    <form action="/user" method "post">
     <br>
     Name: <input type="text" name="username" value="<%=user.name%>"<br>
     Password: <input type="text" name="password" value="if(user.password){<%=user.password%>} else{""}"<br>
     <button type="submit" id = "new_user_button">Submit New User</button>
-      </form>
+  </form>
     <br>
   </div>
 <% include global/footer %>

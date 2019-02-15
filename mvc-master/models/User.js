@@ -18,7 +18,7 @@ getAllDatabaseRows(function(users){
         //callback(user_data)
   //}
 //}
-exports.getUser = function(user_id) {
+/*exports.getUser = function(user_id) {
   console.log("Users.getUser: "+user_id);
 
   var user = createBlankUser();
@@ -37,7 +37,7 @@ exports.getUser = function(user_id) {
     }
   }
   return user;
-}
+}*/
 
 exports.updateUser = function(user_id, new_info) {
   console.log("Users.getUser");

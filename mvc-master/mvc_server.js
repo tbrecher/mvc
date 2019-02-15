@@ -1,7 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var favicon = require('serve-favicon');
-
+//this file should just be index, rules, stats, about, logout
 var app = express();
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
@@ -74,41 +74,8 @@ app.get('/login', function(request, response){
 });
 
 
-app.get('/:user/results', function(request, response){
-  console.log('Request- /'+request.params.user+'/results');
-
-  var stuff = gameResult(request.query.weapon,request.query.villain)
-  var user_data={
-      name: request.params.user,
-      weapon: request.query.weapon,
-      villain: request.query.villain,
-      result: stuff[1],
-      villainWeapon: stuff[0]
-  };
-
-  app.get('/users/:id',function(request, response){
-    console.log('Request- /'+request.params.user+'/edit');
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render('user_details');
-
-  });
-  app.get('/user/new',function(request, response){
-    console.log('Request- /new user');
-    var u=User.createBlankUser();
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render('user_details');
-
-  });
-  app.post('/user', function(request,response){
-  console.log("Post- new user");
-  User.createUser(request.body.name,request.body.password);
 
 
-})//user.js method for new user and input parameters
-  //app.put presentation
-  //
 
   var usersCSV = loadCSV("data/users.csv");
 
@@ -175,8 +142,8 @@ app.get('/:user/results', function(request, response){
   //for (i=1; i<villainsCSV.length/7; i++){
   //  villainsCSV[i*7].concat("\n");
   //}
-  writeCSV(villainsCSV, "data/villains.csv")
-
+  //writeCSV(villainsCSV, "data/villains.csv")
+app.get('/results', function(request, response){
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('results', {user:user_data});
@@ -189,12 +156,7 @@ app.get('/rules', function(request, response){
   response.render('rules');
 });
 
-app.get('/user/new', function(request, response){
-  console.log('Request- user_details');
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.render('user_details');
-});
+
 app.get('/stats', function(request, response){
   var userData = loadCSV('data/users.csv');
   var villainData = loadCSV('data/villains.csv');

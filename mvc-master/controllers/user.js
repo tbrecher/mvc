@@ -21,6 +21,9 @@ app.get('/user/new',function(request, response){
 app.post('/user', function(request,response){
 console.log("Post- new user");
 User.createUser(request.body.name,request.body.password);
+});
+
+U
 app.get('/:user/results', function(request, response){
   console.log('Request- /'+request.params.user+'/results');
 
@@ -31,7 +34,8 @@ app.get('/:user/results', function(request, response){
       villain: request.query.villain,
       result: stuff[1],
       villainWeapon: stuff[0]
-  };
+  });
+
   app.get('/user/new', function(request, response){
     console.log('Request- user_details');
     response.status(200);

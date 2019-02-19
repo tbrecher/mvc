@@ -78,7 +78,7 @@ app.get('/login', function(request, response){
 
 
   var usersCSV = loadCSV("data/users.csv");
-
+var stuff = gameResult(request.query.weapon,request.query.villain);
   for(var i = 0; i < usersCSV.length; i++){
     if(usersCSV[i]["name"] == user_data.name){
       if(user_data.weapon == "rock"){

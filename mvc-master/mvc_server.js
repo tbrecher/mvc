@@ -77,6 +77,29 @@ app.get('/login', function(request, response){
 
 
 
+
+  //console.log(villainsCSV)
+  //for (i=1; i<villainsCSV.length/7; i++){
+  //  villainsCSV[i*7].concat("\n");
+  //}
+  //writeCSV(villainsCSV, "data/villains.csv")
+app.get('/results', function(request, response){
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  response.render('results', {user:user_data});
+});
+
+app.get('/rules', function(request, response){
+  console.log('Request- rules');
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  response.render('rules');
+});
+
+
+app.get('/stats', function(request, response){
+/*  var userData = loadCSV('data/users.csv');
+  var villainData = loadCSV('data/villains.csv');
   var usersCSV = loadCSV("data/users.csv");
 var stuff = gameResult(request.query.weapon,request.query.villain);
   for(var i = 0; i < usersCSV.length; i++){
@@ -137,29 +160,7 @@ var stuff = gameResult(request.query.weapon,request.query.villain);
 
 
     }
-  }
-  //console.log(villainsCSV)
-  //for (i=1; i<villainsCSV.length/7; i++){
-  //  villainsCSV[i*7].concat("\n");
-  //}
-  //writeCSV(villainsCSV, "data/villains.csv")
-app.get('/results', function(request, response){
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.render('results', {user:user_data});
-});
-
-app.get('/rules', function(request, response){
-  console.log('Request- rules');
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.render('rules');
-});
-
-
-app.get('/stats', function(request, response){
-  var userData = loadCSV('data/users.csv');
-  var villainData = loadCSV('data/villains.csv');
+  }*/
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('stats',{users:userData, villains:villainData});

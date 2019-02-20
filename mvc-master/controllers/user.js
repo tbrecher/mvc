@@ -3,13 +3,18 @@ var router = express.Router();
 
 var Users = require('../models/User');
 
-router.get('/users/:id',function(request, response){
-  console.log('Request- /'+request.params.user+'/edit');
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.render('user_details');
+router.get('/user/:id', function(req, res){
+  console.log('GET Request- /user/'+req.params.id+' '+ new Date());
+
+  Users.getUser(req.params.id, function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 
 });
+
+
 router.get('/user/new',function(request, response){
   console.log('Request- /new user');
   var u=User.createBlankUser();
@@ -45,15 +50,7 @@ router.get('/:user/results', function(request, response){
 //app.put presentation
 //
 
-router.get('/user/:id', function(req, res){
-  console.log('Request- /user/'+req.params.id);
 
-  var u = Users.getUser(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
-});
 
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);

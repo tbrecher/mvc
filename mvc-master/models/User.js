@@ -6,11 +6,27 @@ var creds = require('./client_secret.json');
 
 var doc = new GoogleSpreadsheet('*spreadsheet ID*');
 
-exports.getUsers=function(callback){
-getAllDatabaseRows(function(users){
-  callback(users);
-})
+exports.getUser = function(user_id, callback) {
+  console.log("Users.getUser: "+user_id);
+
+  var user = createBlankUser();
+  var all_users = exports.allUsers(function(rows){
+    for(var i=0; i<rows.length; i++){
+      if(rows[i].name.trim()==user_id.trim()){
+        user={
+          name:rows[i].name.trim(),
+          games_played:rows[i].gamesplayed.trim(),
+          lost:rows[i].gameslost.trim(),
+          won:rows[i].gameswon.trim(),
+          password:rows[i].password.trim()
+        }
+      }
+    }
+    callback(user);
+  });
 }
+
+
 
 //exports.getUserbyName=function(callback){
   //exports.getUsers(function(user_data){
@@ -19,26 +35,7 @@ getAllDatabaseRows(function(users){
   //}
 //}
 
-exports.getUser = function(user_id) {
-  console.log("Users.getUser: "+user_id);
 
-  var user = createBlankUser();
-  var all_users = getAllDatabaseRows();
-
-  for(var i=1; i<all_users.length; i++){
-    var u = all_users[i].split(',');
-    if(u[0].trim()==user_id.trim()){
-      user={
-        name:u[0].trim(),
-        games_played:u[1].trim(),
-        lost:u[2].trim(),
-        won:u[3].trim(),
-        password:u[4].trim()
-      }
-    }
-  }
-  return user;
-}
 
 exports.updateUser = function(user_id, new_info) {
   console.log("Users.getUser");
@@ -63,7 +60,7 @@ exports.createUser = function(user_name, user_password){
   //fill
 }
 
-var getAllDatabaseRows= function(callback){//parameter of function is a function
+exports.allUsers= function(callback){//parameter of function is a function
  doc.useServiceAccountAuth(creds, function (err) {
   //Get all of the rows from the spreadsheet.
    doc.getRows(1, function (err, rows) {

@@ -22,7 +22,7 @@ app.listen(port, function(){
 app.get('/', function(request, response){
   console.log('Request- default route');
   response.status(200);
-  Users.allUsers();
+  //Users.allUsers();
   response.setHeader('Content-Type', 'text/html')
   response.render('index');
 });
@@ -30,7 +30,7 @@ app.get('/', function(request, response){
 app.get('/login', function(request, response){
   console.log('Request- login');
 
-  var data=Users.allUsers;
+  var data=Users.allUsers(function(rows){
     var new_user=true;
     for(var i=0; i<rows.length;i++){
       if(request.query.player_name==rows[i]["name"]){
@@ -61,6 +61,8 @@ app.get('/login', function(request, response){
         response.setHeader('Content-Type', 'text/html');
         response.render('game', {user:user_data});
   }
+  });
+
 });
 
 
@@ -98,7 +100,7 @@ app.get('/about', function(request, response){
 });
 
 app.get('/play_again', function(request, response){
-  var data=Users.allUsers;
+/*  var data=Users.allUsers;
     for(var i=0; i<data.length;i++){
           var user_data={};
           user_data.name=data[i].name;
@@ -107,6 +109,7 @@ app.get('/play_again', function(request, response){
           response.render('game', {user:user_data});
           break;
         }
+}*/
 });
 
 

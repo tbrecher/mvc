@@ -14,11 +14,11 @@ exports.getUser = function(user_id, callback) {
     for(var i=0; i<rows.length; i++){
       if(rows[i].name.trim()==user_id.trim()){
         user={
-          name:rows[i].name.trim(),
-          games_played:rows[i].gamesplayed.trim(),
-          lost:rows[i].gameslost.trim(),
-          won:rows[i].gameswon.trim(),
-          password:rows[i].password.trim()
+          name:rows[i].Name.trim(),
+          games_played:rows[i].gamesPlayed.trim(),
+          lost:rows[i].Lost.trim(),
+          won:rows[i].Won.trim(),
+          password:rows[i].Password.trim()
         }
       }
     }
@@ -68,7 +68,7 @@ exports.allUsers= function(callback){//parameter of function is a function
   //Get all of the rows from the spreadsheet.
    doc.getRows(1, function (err, rows) {
      console.log(rows[0]);
-    callback(rows);
+     callback(rows);
    });
  });
 }

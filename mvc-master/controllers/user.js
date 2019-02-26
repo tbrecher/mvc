@@ -15,6 +15,8 @@ router.get('/user/:id', function(req, res){
 });
 
 
+
+
 router.get('/user/new',function(request, response){
   console.log('Request- /new user');
   var u=User.createBlankUser();

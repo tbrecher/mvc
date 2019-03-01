@@ -10,10 +10,10 @@
   <% include global/header %>
   <div id="results">
       <h2>Game Results</h2>
-      <h4><%=user.name%>, you <%=user.result%> with <%=user.weapon%> against <%=user.villain.replace('_', ' ')%> who used <%=user.villainWeapon%>! </h4>
+      <h4><%=u.name%>, you <%=u.result%> with <%=u.weapon%> against <%=u.villain.replace('_', ' ')%> who used <%=u.villainWeapon%>! </h4>
         <!-- photos -->
-        <img id="villainImg" src="../images/<%=user.villain%>_<%=user.villainWeapon%>.svg" width="200" height= "200" align="left">
-        <img id="playerImg" src="../images/player_<%=user.weapon%>.png" width="200" height= "200" align="left">
+        <img id="villainImg" src="../images/<%=u.villain%>_<%=u.villainWeapon%>.svg" width="200" height= "200" align="left">
+        <img id="playerImg" src="../images/player_<%=u.weapon%>.png" width="200" height= "200" align="left">
         <!-- replay button -->
         <form action="/play_again" method="get">
           <button type="submit" id = "play_again">Play Again</button>

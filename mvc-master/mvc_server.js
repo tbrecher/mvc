@@ -52,14 +52,9 @@ app.get('/login', function(request, response){
       }
     }
         if(new_user){
-            var user=Users.createBlankUser;
-
-
-        var user_data={};
-        user_data.name=user['name'];
         response.status(200);
         response.setHeader('Content-Type', 'text/html');
-        response.render('game', {user:user_data});
+        response.render('user_details');
   }
   });
 
@@ -71,11 +66,7 @@ app.get('/login', function(request, response){
 
 
 
-app.get('/results', function(request, response){
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.render('results', {user:user_data});
-});
+
 
 app.get('/rules', function(request, response){
   console.log('Request- rules');

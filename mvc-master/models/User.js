@@ -11,7 +11,7 @@ exports.getUser = function(user_id, callback) {
 
   var user = createBlankUser();
   var all_users = exports.allUsers(function(rows){
-    for(var i=0; i<rows.length; i++){
+    for(var i=1; i<rows.length; i++){
       if(rows[i].name.trim()==user_id.trim()){
         user={
           name:rows[i].Name.trim(),
@@ -53,13 +53,20 @@ exports.createUser = function(user_name, user_password){
   var user={
     name:user_name,
     password: user_password,
-    games_played:"0",
-    lost:"0",
-    won:"0",
+    gamesPlayed:"0",
+    win:"0",
+    lose:"0",
+    tie:"0",
     rock:"0",
     paper:"0",
     scissors:"0"
   };
+  doc.addRow(1,user, function(err) {
+    if(err) {
+      console.log(err);
+    }
+
+  });
   //fill
 }
 

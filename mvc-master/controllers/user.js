@@ -11,7 +11,6 @@ router.get('/user/:id', function(req, res){
     res.setHeader('Content-Type', 'text/html')
     res.render('user_details', {user:u});
   });
-
 });
 
 
@@ -22,12 +21,15 @@ router.get('/user/new',function(request, response){
   var u=User.createBlankUser();
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
-  response.render('user_details');
-
+  response.render('user_details',{user:u});
 });
+
 router.post('/user', function(request,response){
 console.log("Post- new user");
-User.createUser(request.body.name,request.body.password);
+Users.createUser(request.body.name,request.body.password);
+response.status(200);
+response.setHeader('Content-Type', 'text/html')
+response.render('index');
 });
 
 
@@ -56,12 +58,12 @@ router.get('/:user/results', function(request, response){
 
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
+  Users.getUser(req.params.id, function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 
-  var u = Users.getUser(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
 });
 
 router.post('user/:id', function(req,res){

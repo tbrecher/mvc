@@ -112,6 +112,7 @@ router.get('/user/:id/results', function(request, response){
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   Users.getUser(req.params.id, function(u){
+    console.log("User return");
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
     res.render('user_details', {user:u});

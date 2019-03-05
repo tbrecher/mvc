@@ -14,11 +14,16 @@ exports.getUser = function(user_id, callback) {
     for(var i=1; i<rows.length; i++){
       if(rows[i].name.trim()==user_id.trim()){
         user={
-          name:rows[i].Name.trim(),
-          games_played:rows[i].gamesPlayed.trim(),
-          lost:rows[i].Lost.trim(),
-          won:rows[i].Won.trim(),
-          password:rows[i].Password.trim()
+          name:rows[i].name.trim(),
+          games_played:rows[i].gamesplayed.trim(),
+          lost:rows[i].lose.trim(),
+          won:rows[i].win.trim(),
+          tie:rows[i].tie.trim(),
+          password:rows[i].password.trim(),
+          rock:rows[i].rock.trim(),
+          paper:rows[i].paper.trim(),
+          scissors:rows[i].scissors.trim()
+
         }
       }
     }
@@ -37,12 +42,29 @@ exports.getUser = function(user_id, callback) {
 
 
 
-exports.updateUser = function(user_id, new_info) {
-  console.log("Users.getUser");
-  var user={
-    name:"test"
-  };
-  return user;
+exports.updateUser = function(user_name){
+  exports.getUser(user_name, function(u){
+    var user={
+      name:user_name,
+      password: u.name,
+      gamesPlayed:u.games_played,
+      win:u.won,
+      lose:u.lost,
+      tie:u.tie,
+      rock:u.rock,
+      paper:u.paper,
+      scissors:u.scissors
+    };
+
+  })
+
+  doc.addRow(1,user, function(err) {
+    if(err) {
+      console.log(err);
+    }
+
+  });
+  //fill
 }
 
 exports.deleteUser = function(user_id){

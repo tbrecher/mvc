@@ -3,6 +3,8 @@ var fs = require('fs');
 var favicon = require('serve-favicon');
 //this file should just be index, rules, stats, about, logout
 var app = express();
+var methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

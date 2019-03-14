@@ -3,22 +3,23 @@ var router = express.Router();
 
 var Users = require('../models/User');
 
-router.get('/user/:id', function(req, res){
+/*router.get('/user/:id', function(req, res){
   console.log('GET Request- /user/'+req.params.id+' '+ new Date());
 
   Users.getUser(req.params.id, function(u){
+    console.log("get User"+u);
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
     res.render('user_details', {user:u});
   });
-});
+});*/
 
 
 
 
 router.get('/user/new',function(request, response){
   console.log('Request- /new user');
-  var u=User.createBlankUser();
+  var u=Users.createBlankUser();
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('user_details',{user:u});
@@ -112,22 +113,24 @@ router.get('/user/:id/results', function(request, response){
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   Users.getUser(req.params.id, function(u){
-    console.log("User return");
+    console.log(u);
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
     res.render('user_details', {user:u});
   });
-
 });
 
-router.post('user/:id', function(req,res){
-  console.log('POST Request- /user/'+req.params.id);
-  console.log(req.body);
+router.put('/user/:id', function(request,response){
+  var name= request.params.id;
   var u={
-    name: req.body.username.trim(),
-    password: req.body.password.trim()
+    name: request.body.name.trim(),
+    password: request.body.password.trim()
   }
-})//create a user, would use put to update a user but could also use post
+  Users.updateUser(name,u.name, u.password);
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  response.render('index');
+});
 
 
 

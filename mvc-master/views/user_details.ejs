@@ -8,11 +8,12 @@
 <body>
   <% include global/header %>
 
-
   <div id="feedback">
   </div>
+      <%if (!user.name){%>
   <div id="enter_name">
-    <h2>User Details - <%=user.name%></h2>
+<h2>User Details - NEW USER</h2>
+
     <form action="/user" method= "post">
     <br>
     Name: <input type="text" name="name" value= "<%=user.name%>"<br>
@@ -21,6 +22,18 @@
   </form>
     <br>
   </div>
+  <%}%>
+  <h2>User Details - <%=user.name%></h2>
+    <%if (user.name){%>
+      <form action="/user/<%=user.name%>?_method=PUT" method="post">
+      <br>
+      Name: <input type="text" name="name" value= "<%=user.name%>"<br>
+      Password: <input type="text" name="password" value="<%=user.password%>"<br>
+      <button type="submit" id = "update_user_button">Update User</button>
+    </form>
+      <br>
+      <%}%>
+
 <% include global/footer %>
  </body>
 </html>

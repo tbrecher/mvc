@@ -8,25 +8,29 @@ var doc = new GoogleSpreadsheet('1D4cOG9jV0L0UiuK4TEYpHTGgb_tizTMk4O3Hl4VlEq4');
 
 exports.getUser = function(user_id, callback) {
   console.log("Users.getUser: "+user_id);
-
-  var user = createBlankUser();
+    var user = createBlankUser();
   var all_users = exports.allUsers(function(rows){
-    for(var i=1; i<rows.length; i++){
-      if(rows[i].name.trim()==user_id.trim()){
+    for(var i=0; i<rows.length; i++){
+      if(rows[i].name.trim()==user_id){
+        console.log("SERIOUSLY"+user_id);
         user={
           name:rows[i].name.trim(),
+          password:rows[i].password.trim(),
           games_played:rows[i].gamesplayed.trim(),
           lost:rows[i].lose.trim(),
           won:rows[i].win.trim(),
           tie:rows[i].tie.trim(),
-          password:rows[i].password.trim(),
           rock:rows[i].rock.trim(),
           paper:rows[i].paper.trim(),
-          scissors:rows[i].scissors.trim()
+          scissor:rows[i].scissor.trim()
 
         }
       }
+      else{
+        console.log("user_id issues");
+      }
     }
+    console.log("Callback-"+user.name);
     callback(user);
   });
 }
@@ -42,9 +46,31 @@ exports.getUser = function(user_id, callback) {
 
 
 
-exports.updateUser = function(user_name){
-  exports.getUser(user_name, function(u){
-    var user={
+exports.updateUser = function(name,user_name,password) {
+  console.log("update requested"+name);
+  exports.getUser(name, function(u){
+    console.log("update requested2");
+    exports.allUsers(function(rows){
+      console.log("update requested3");
+        for(var i = 0; i <rows.length; i++){
+            if(rows[i].name.trim() == u.name.trim() && rows[i].password.trim() == u.password.trim()){
+                   console.log(rows[i]);
+                          rows[i].name = user_name;
+                          rows[i].password = password;
+                          if(!rows[i].freq){
+                            rows[i].freq = 0;
+                          }
+                          rows[i].freq = JSON.parse(rows[i].freq)+1;
+                rows[i].save();
+              }
+            }
+            console.log("update complete");
+  });
+});
+}
+
+
+  /*  var user={
       name:user_name,
       password: u.name,
       gamesPlayed:u.games_played,
@@ -54,18 +80,9 @@ exports.updateUser = function(user_name){
       rock:u.rock,
       paper:u.paper,
       scissors:u.scissors
-    };
+    };*/
 
-  })
-
-  doc.addRow(1,user, function(err) {
-    if(err) {
-      console.log(err);
-    }
-
-  });
   //fill
-}
 
 exports.deleteUser = function(user_id){
   //fill
@@ -81,7 +98,7 @@ exports.createUser = function(user_name, user_password){
     tie:"0",
     rock:"0",
     paper:"0",
-    scissors:"0"
+    scissor:"0"
   };
   doc.addRow(1,user, function(err) {
     if(err) {
@@ -106,13 +123,19 @@ exports.allUsers= function(callback){//parameter of function is a function
 var createBlankUser= function(){
   var user={
     name:"",
+    password:"",
     games_played:"0",
-    lost:"0",
-    won:"0",
-    password:""
+    lose:"0",
+    win:"0",
+    tie:"0",
+    rock:"0",
+    paper:"0",
+    scissor:"0"
   };
   return user;
 }
+
+
 //callback=function meant to be called as soon as function is finished
 //helps with timing, need to reorganize w callbacks to use google sheets
 //dont have to worry about parsing the data

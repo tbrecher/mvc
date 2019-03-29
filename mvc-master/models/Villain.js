@@ -37,7 +37,8 @@ exports.updateVillain = function(name) {
       console.log("update requested3");
         for(var i = 0; i <rows.length; i++){
             if(rows[i].name.trim() == v.name.trim()){
-                          rows[i].name = user_name;///dont know what to do with these categories
+                          rows[i].name = user_name;
+                          rows[i].gamesplayed=///dont know what to do with these categories
                           //have some ideas but we'll talk
                           if(!rows[i].freq){
                             rows[i].freq = 0;

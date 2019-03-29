@@ -106,6 +106,7 @@ exports.createUser = function(user_name, user_password){
     }
 
   });
+  return user;
   //fill
 }
 

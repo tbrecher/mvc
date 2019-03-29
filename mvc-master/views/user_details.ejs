@@ -10,7 +10,7 @@
 
   <div id="feedback">
   </div>
-      <%if (!user.name){%>
+      <%if (user.name=="new"){%>
   <div id="enter_name">
 <h2>User Details - NEW USER</h2>
 
@@ -24,7 +24,7 @@
   </div>
   <%}%>
   <h2>User Details - <%=user.name%></h2>
-    <%if (user.name){%>
+    <%if(user.name!="new") {%>
       <form action="/user/<%=user.name%>?_method=PUT" method="post">
       <br>
       Name: <input type="text" name="name" value= "<%=user.name%>"<br>

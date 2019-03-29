@@ -54,9 +54,11 @@ app.get('/login', function(request, response){
       }
     }
     if(new_user){
+      var user=Users.createUser("new","user");
+      console.log(user);
       response.status(200);
       response.setHeader('Content-Type', 'text/html');
-      response.render('user_details');
+      response.render('user_details',{user:user});
     }
   });
 });
@@ -84,7 +86,6 @@ app.get('/stats', function(request, response){
       user["rock"] = parseInt(allUsers[i].rock);
       user["paper"] = parseInt(allUsers[i].paper);
       user["scissor"] = parseInt(allUsers[i].scissor);
-      allusers.push(user);
     }
     Villains.allVillains(function(allVillains){
       for(var i = 0; i <allVillains.length; i++){
@@ -97,6 +98,7 @@ app.get('/stats', function(request, response){
         villain["rock"] = parseInt(allVillains[i].rock);
         villain["paper"] = parseInt(allVillains[i].paper);
         villain["scissor"] = parseInt(allVillains[i].scissor);
+      //  Villains.updateVillain(user);
         allvillains.push(villain);
       }
       response.status(200);

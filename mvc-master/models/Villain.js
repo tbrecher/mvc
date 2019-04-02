@@ -19,6 +19,7 @@ exports.getVillain = function(villain_id, callback) {
           scissor:rows[i].scissor.trim()
 
         }
+        console.log("right villain");
       }
       else{
         console.log("villain_id issues");
@@ -37,20 +38,26 @@ exports.updateVillain = function(name) {
       console.log("update requested3");
         for(var i = 0; i <rows.length; i++){
             if(rows[i].name.trim() == v.name.trim()){
-                          rows[i].name = user_name;
-                          rows[i].gamesplayed=///dont know what to do with these categories
-                          //have some ideas but we'll talk
+                          rows[i].name = v.name;
+                          rows[i].gamesplayed=v.gamesplayed;
+                          rows[i].win=v.win;
+                          rows[i].lose=v.lose;
+                          rows[i].tie=v.tie;
+                          rows[i].rock=v.rock;
+                          rows[i].scissor=v.scissor;
+                          rows[i].paper=v.paper;
+                        }
                           if(!rows[i].freq){
                             rows[i].freq = 0;
                           }
                           rows[i].freq = JSON.parse(rows[i].freq)+1;
-                rows[i].save();
+                          rows[i].save();
               }
-            }
-            console.log("update complete");
+              console.log("update complete");
+            });
   });
-});
 }
+
 
 var createBlankVillain= function(){
   var villain={

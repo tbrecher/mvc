@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Users = require('../models/User');
+var Villain = require('../models/Villain');
 
 /*router.get('/user/:id', function(req, res){
   console.log('GET Request- /user/'+req.params.id+' '+ new Date());
@@ -71,17 +72,42 @@ function strategy(weapon,villain){
 }
 
 function gameResult(weapon,villain){
+  var villain=villain;
   var villainWeapon = strategy(weapon,villain);
-  var villainStuff = [];
+  var villainStuff = {
+    name:villain,
+    weapon:villainWeapon,
+    win:0,
+    lose:0,
+    tie:0,
+    rock:0,
+    paper:0,
+    scissor:0,
+    result:""
+  };
+  if(weapon="rock"){
+    villainWeapon.rock+=1;
+  }
+  if(weapon="paper"){
+    villainWeapon.paper+=1;
+  }
+  if(weapon="scissor"){
+    villainWeapon.scissor+=1;
+  }
   if(villainWeapon=="rock" && weapon=="rock" || villainWeapon=="paper" && weapon=="paper" || villainWeapon=="scissors" && weapon=="scissors"){
-    villainStuff=[villainWeapon,"tie"];
+    villainStuff.tie+=1;
+    villainStuff.result="tie";
+
   }
   if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
-    villainStuff=[villainWeapon,"lose"];
+    villainStuff.win+=1;
+      villainStuff.result="win";
   }
   if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
-    villainStuff=[villainWeapon,"win"];
+    villainStuff.lose+=1;
+      villainStuff.result="lose";
   }
+  Villain.updateVillain(villainStuff.name);
   return villainStuff;
 }
 
@@ -93,8 +119,8 @@ router.get('/user/:id/results', function(request, response){
       name: request.params.id,
       weapon: request.query.weapon,
       villain: request.query.villain,
-      result: r[1],
-      villainWeapon: r[0]
+      result: r.result,
+      villainWeapon: r.weapon
     }
     response.status(200);
     response.setHeader('Content-Type', 'text/html')

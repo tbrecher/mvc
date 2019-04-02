@@ -86,6 +86,7 @@ app.get('/stats', function(request, response){
       user["rock"] = parseInt(allUsers[i].rock);
       user["paper"] = parseInt(allUsers[i].paper);
       user["scissor"] = parseInt(allUsers[i].scissor);
+      allusers.push(user);
     }
     Villains.allVillains(function(allVillains){
       for(var i = 0; i <allVillains.length; i++){

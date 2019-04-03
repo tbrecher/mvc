@@ -23,8 +23,9 @@
     <br>
   </div>
   <%}%>
+  <%if(user.name!="new") {%>
   <h2>User Details - <%=user.name%></h2>
-    <%if(user.name!="new") {%>
+
       <form action="/user/<%=user.name%>?_method=PUT" method="post">
       <br>
       Name: <input type="text" name="name" value= "<%=user.name%>"<br>

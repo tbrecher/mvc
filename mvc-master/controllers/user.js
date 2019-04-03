@@ -78,65 +78,65 @@ function gameResult(user,weapon,villain){
     result:"",
     weapon:villainWeapon
   };
-  var result="";
   Villain.getVillain(villain,function(v){
-    console.log("USER"+user);
-    Users.getUser(user,function(u){
+    if(villainWeapon=="rock"){
+      v.rock=parseInt(v.rock)+1;
+    }
+    if(villainWeapon=="paper"){
+      v.paper=parseInt(v.paper)+1;
+    }
+    if(villainWeapon=="scissor"){
+      v.scissor=parseInt(v.scissor)+1;
+    }
+    if(villainWeapon=="rock" && weapon=="rock" || villainWeapon=="paper" && weapon=="paper" || villainWeapon=="scissors" && weapon=="scissors"){
+    v.tie=parseInt(v.tie)+1;
 
+    }
+    if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
+    v.win=parseInt(v.win)+1;
+    }
+    if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
+    v.lose=parseInt(v.lose)+1;
+    }
+    console.log("RESULT"+villainStuff.result);
+    console.log("WEAPON"+villainStuff.weapon);
+    Villain.updateVillain(v);
+  });
 
-  /*var villainStuff = {
-    name:villain,
-    weapon:villainWeapon,
-    win:0,
-    lose:0,
-    tie:0,
-    rock:0,
-    paper:0,
-    scissor:0,
-    result:""
-  };*/
-  if(weapon="rock"){
+  Users.getUser(user,function(u){
+  if(weapon=="rock"){
     u.rock=parseInt(u.rock)+1;
-    console.log("ROCK ON"+u.rock)
   }
-  if(weapon="paper"){
+  if(weapon=="paper"){
     u.paper=parseInt(u.paper)+1;
   }
-  if(weapon="scissor"){
+  if(weapon=="scissor"){
     u.scissor=parseInt(u.scissor)+1;
   }
-  if(villainWeapon="rock"){
-    v.rock=parseInt(v.rock)+1;
-  }
-  if(villainWeapon="paper"){
-    v.paper=parseInt(v.paper)+1;
-  }
-  if(villainWeapon="scissor"){
-    v.scissor=parseInt(v.scissor)+1;
-  }
   if(villainWeapon=="rock" && weapon=="rock" || villainWeapon=="paper" && weapon=="paper" || villainWeapon=="scissors" && weapon=="scissors"){
-  v.tie=parseInt(v.tie)+1;
   u.tie=parseInt(u.tie)+1;
-  result="tie";
 
   }
   if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
-  v.win=parseInt(v.win)+1;
   u.lose=parseInt(u.lose)+1;
-    result="lose";
   }
   if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
-  v.lose=parseInt(v.lose)+1;
-  v.win=parseInt(u.win)+1;
-      result="win";
+  u.win=parseInt(u.win)+1;
   }
-  villainStuff.result=result;
-  villainStuff.weapon=villainWeapon;
-  Villain.updateVillain(v);
   Users.updateUserStats(u);
 });
-});
-console.log("VillainSTUFF"+villainStuff.result);
+if(villainWeapon=="rock" && weapon=="rock" || villainWeapon=="paper" && weapon=="paper" || villainWeapon=="scissors" && weapon=="scissors"){
+villainStuff.result="tie";
+
+}
+if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
+  villainStuff.result="lose";
+}
+if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
+    villainStuff.result="win";
+}
+console.log("RESULT"+villainStuff.result);
+console.log("WEAPON"+villainStuff.weapon);
   return villainStuff;
 }
 
@@ -149,8 +149,8 @@ router.get('/user/:id/results', function(request, response){
       name: request.params.id,
       weapon: request.query.weapon,
       villain: request.query.villain,
-      result: r[0],
-      villainWeapon: r[1]
+      result: r.result,
+      villainWeapon: r.weapon
     }
     response.status(200);
     response.setHeader('Content-Type', 'text/html')

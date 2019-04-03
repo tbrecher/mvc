@@ -12,7 +12,6 @@ exports.getUser = function(user_id, callback) {
   var all_users = exports.allUsers(function(rows){
     for(var i=0; i<rows.length; i++){
       if(rows[i].name.trim()==user_id){
-        console.log("SERIOUSLY"+user_id);
         user={
           name:rows[i].name.trim(),
           password:rows[i].password.trim(),
@@ -25,7 +24,7 @@ exports.getUser = function(user_id, callback) {
           scissor:rows[i].scissor.trim()
 
         }
-          console.log("right villain");
+          console.log("right user");
       }
       else{
         console.log("user_id issues");

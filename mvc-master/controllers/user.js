@@ -74,7 +74,10 @@ function strategy(weapon,villain){
 function gameResult(weapon,villain){
   var villain=villain;
   var villainWeapon = strategy(weapon,villain);
-  var villainStuff = {
+  villainStuff=[]
+  var result="";
+  Villain.getVillain(villain,function(v){
+  /*var villainStuff = {
     name:villain,
     weapon:villainWeapon,
     win:0,
@@ -84,32 +87,35 @@ function gameResult(weapon,villain){
     paper:0,
     scissor:0,
     result:""
-  };
+  };*/
   if(weapon="rock"){
-    villainWeapon.rock+=1;
+    v.rock+=1;
   }
   if(weapon="paper"){
-    villainWeapon.paper+=1;
+    v.paper+=1;
   }
   if(weapon="scissor"){
-    villainWeapon.scissor+=1;
+    v.scissor+=1;
   }
   if(villainWeapon=="rock" && weapon=="rock" || villainWeapon=="paper" && weapon=="paper" || villainWeapon=="scissors" && weapon=="scissors"){
-    villainStuff.tie+=1;
-    villainStuff.result="tie";
+    v.tie+=1;
+  result="tie";
 
   }
   if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
-    villainStuff.win+=1;
-      villainStuff.result="win";
+    v.win+=1;
+    result="lose";
   }
   if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
-    villainStuff.lose+=1;
-      villainStuff.result="lose";
+    v.lose+=1;
+      result="win";
   }
-  Villain.updateVillain(villainStuff.name);
+  villainStuff=[result,villainWeapon];
+  Villain.updateVillain(v.name);
+});
   return villainStuff;
 }
+
 
 router.get('/user/:id/results', function(request, response){
   console.log('Request- /'+request.params.user+'/results');
@@ -119,8 +125,8 @@ router.get('/user/:id/results', function(request, response){
       name: request.params.id,
       weapon: request.query.weapon,
       villain: request.query.villain,
-      result: r.result,
-      villainWeapon: r.weapon
+      result: r[1],
+      villainWeapon: r[2]
     }
     response.status(200);
     response.setHeader('Content-Type', 'text/html')

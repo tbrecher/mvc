@@ -16,9 +16,9 @@ exports.getUser = function(user_id, callback) {
         user={
           name:rows[i].name.trim(),
           password:rows[i].password.trim(),
-          games_played:rows[i].gamesplayed.trim(),
-          lost:rows[i].lose.trim(),
-          won:rows[i].win.trim(),
+          gamesplayed:rows[i].gamesplayed.trim(),
+          lose:rows[i].lose.trim(),
+          win:rows[i].win.trim(),
           tie:rows[i].tie.trim(),
           rock:rows[i].rock.trim(),
           paper:rows[i].paper.trim(),
@@ -49,7 +49,7 @@ exports.getUser = function(user_id, callback) {
 
 exports.updateUser = function(name,user_name,password) {
   console.log("update requested"+name);
-  exports.getUser(name, function(u){
+    exports.getUser(name, function(u){
     console.log("update requested2");
     exports.allUsers(function(rows){
       console.log("update requested3");
@@ -70,22 +70,22 @@ exports.updateUser = function(name,user_name,password) {
 });
 }
 
-exports.updateUserStats = function(name) {
-  console.log("update requested"+name);
-  exports.getUser(name, function(u){
-    console.log("update requested2");
+exports.updateUserStats = function(newU) {
+  console.log("update requested"+newU.name);
+//  exports.getUser(name, function(u){
+    //console.log("update requested2");
     exports.allUsers(function(rows){
       console.log("update requested3");
       for(var i = 0; i <rows.length; i++){
-          if(rows[i].name.trim() == u.name.trim()){
-                        rows[i].name = u.name;
-                        rows[i].gamesplayed=u.gamesplayed;
-                        rows[i].win=u.win;
-                        rows[i].lose=u.lose;
-                        rows[i].tie=u.tie;
-                        rows[i].rock=u.rock;
-                        rows[i].scissor=u.scissor;
-                        rows[i].paper=u.paper;
+          if(rows[i].name.trim() == newU.name.trim()){
+                        rows[i].name = newU.name;
+                        rows[i].gamesplayed=newU.gamesplayed;
+                        rows[i].win=newU.win;
+                        rows[i].lose=newU.lose;
+                        rows[i].tie=newU.tie;
+                        rows[i].rock=newU.rock;
+                        rows[i].scissor=newU.scissor;
+                        rows[i].paper=newU.paper;
                       }
                         if(!rows[i].freq){
                           rows[i].freq = 0;
@@ -95,7 +95,6 @@ exports.updateUserStats = function(name) {
             }
             console.log("update complete");
           });
-    });
   }
 
 

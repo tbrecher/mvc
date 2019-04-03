@@ -10,9 +10,9 @@ exports.getVillain = function(villain_id, callback) {
       if(rows[i].name.trim()==villain_id){
         villain={
           name:rows[i].name.trim(),
-          games_played:rows[i].gamesplayed.trim(),
-          lost:rows[i].lose.trim(),
-          won:rows[i].win.trim(),
+          gamesplayed:rows[i].gamesplayed.trim(),
+          lose:rows[i].lose.trim(),
+          win:rows[i].win.trim(),
           tie:rows[i].tie.trim(),
           rock:rows[i].rock.trim(),
           paper:rows[i].paper.trim(),
@@ -30,22 +30,22 @@ exports.getVillain = function(villain_id, callback) {
   });
 }
 
-exports.updateVillain = function(name) {
-  console.log("update requested"+name);
-  exports.getVillain(name, function(v){
-    console.log("update requested2");
+exports.updateVillain = function(newV) {
+  console.log("update requested"+newV.name);
+  //exports.getVillain(newV.name, function(v){
+  //  console.log("update requested2");
     exports.allVillains(function(rows){
       console.log("update requested3");
         for(var i = 0; i <rows.length; i++){
-            if(rows[i].name.trim() == v.name.trim()){
-                          rows[i].name = v.name;
-                          rows[i].gamesplayed=v.gamesplayed;
-                          rows[i].win=v.win;
-                          rows[i].lose=v.lose;
-                          rows[i].tie=v.tie;
-                          rows[i].rock=v.rock;
-                          rows[i].scissor=v.scissor;
-                          rows[i].paper=v.paper;
+            if(rows[i].name.trim() == newV.name.trim()){
+                          rows[i].name = newV.name;
+                          rows[i].gamesplayed=newV.gamesplayed;
+                          rows[i].win=newV.win;
+                          rows[i].lose=newV.lose;
+                          rows[i].tie=newV.tie;
+                          rows[i].rock=newV.rock;
+                          rows[i].scissor=newV.scissor;
+                          rows[i].paper=newV.paper;
                         }
                           if(!rows[i].freq){
                             rows[i].freq = 0;
@@ -55,14 +55,13 @@ exports.updateVillain = function(name) {
               }
               console.log("update complete");
             });
-  });
 }
 
 
 var createBlankVillain= function(){
   var villain={
     name:"",
-    games_played:"0",
+    gamesplayed:"0",
     lose:"0",
     win:"0",
     tie:"0",

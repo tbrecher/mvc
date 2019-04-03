@@ -73,9 +73,11 @@ function strategy(weapon,villain){
 }
 
 function gameResult(user,weapon,villain){
-  var villain=villain;
   var villainWeapon = strategy(weapon,villain);
-  villainStuff=[]
+  var villainStuff={
+    result:"",
+    weapon:villainWeapon
+  };
   var result="";
   Villain.getVillain(villain,function(v){
     console.log("USER"+user);
@@ -105,7 +107,6 @@ function gameResult(user,weapon,villain){
   }
   if(villainWeapon="rock"){
     v.rock=parseInt(v.rock)+1;
-    console.log("ROCK ON"+v.rock)
   }
   if(villainWeapon="paper"){
     v.paper=parseInt(v.paper)+1;
@@ -121,19 +122,21 @@ function gameResult(user,weapon,villain){
   }
   if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
   v.win=parseInt(v.win)+1;
-  u.lose=parseInt(v.lose)+1;
+  u.lose=parseInt(u.lose)+1;
     result="lose";
   }
   if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
   v.lose=parseInt(v.lose)+1;
-  v.win=parseInt(v.win)+1;
+  v.win=parseInt(u.win)+1;
       result="win";
   }
-  villainStuff=[result,villainWeapon];
-  Villain.updateVillain(v.name);
-  Users.updateUserStats(u.name);
+  villainStuff.result=result;
+  villainStuff.weapon=villainWeapon;
+  Villain.updateVillain(v);
+  Users.updateUserStats(u);
 });
 });
+console.log("VillainSTUFF"+villainStuff.result);
   return villainStuff;
 }
 

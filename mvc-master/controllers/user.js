@@ -146,8 +146,8 @@ router.get('/user/:id/results', function(request, response){
       name: request.params.id,
       weapon: request.query.weapon,
       villain: request.query.villain,
-      result: r[1],
-      villainWeapon: r[2]
+      result: r[0],
+      villainWeapon: r[1]
     }
     response.status(200);
     response.setHeader('Content-Type', 'text/html')

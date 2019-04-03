@@ -25,6 +25,7 @@ exports.getUser = function(user_id, callback) {
           scissor:rows[i].scissor.trim()
 
         }
+          console.log("right villain");
       }
       else{
         console.log("user_id issues");

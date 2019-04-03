@@ -117,16 +117,12 @@ app.get('/about', function(request, response){
 });
 
 
-app.get('/play_again', function(request, response){
-  var data=Users.allUsers(function(rows){
-    for(var i=0; i<rows.length;i++){
-      var user_data={};
-      user_data.name=rows[i].name;
-      console.log('Request- play again')
-      response.status(200);
-      response.setHeader('Content-Type', 'text/html')
-      response.render('game', {user:user_data});
-    }
+app.get('/play_again/:id', function(request, response){
+  console.log('Request- play again')
+  Users.getUser(request.params.id, function(u){
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.render('game', {user:u});
   });
 });
 

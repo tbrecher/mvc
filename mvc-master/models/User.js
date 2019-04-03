@@ -70,6 +70,35 @@ exports.updateUser = function(name,user_name,password) {
 });
 }
 
+exports.updateUserStats = function(name) {
+  console.log("update requested"+name);
+  exports.getUser(name, function(u){
+    console.log("update requested2");
+    exports.allUsers(function(rows){
+      console.log("update requested3");
+      for(var i = 0; i <rows.length; i++){
+          if(rows[i].name.trim() == u.name.trim()){
+                        rows[i].name = u.name;
+                        rows[i].gamesplayed=u.gamesplayed;
+                        rows[i].win=u.win;
+                        rows[i].lose=u.lose;
+                        rows[i].tie=u.tie;
+                        rows[i].rock=u.rock;
+                        rows[i].scissor=u.scissor;
+                        rows[i].paper=u.paper;
+                      }
+                        if(!rows[i].freq){
+                          rows[i].freq = 0;
+                        }
+                        rows[i].freq = JSON.parse(rows[i].freq)+1;
+                        rows[i].save();
+            }
+            console.log("update complete");
+          });
+    });
+  }
+
+
 
   /*  var user={
       name:user_name,

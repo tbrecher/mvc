@@ -36,6 +36,7 @@ response.render('index');
 
 
 function strategy(weapon,villain){
+  var counter=0;
   var random = Math.random();
   if(villain == "bones"){return "rock";}
   if(villain == "manny"){return "rock";}
@@ -71,12 +72,16 @@ function strategy(weapon,villain){
   }
 }
 
-function gameResult(weapon,villain){
+function gameResult(user,weapon,villain){
   var villain=villain;
   var villainWeapon = strategy(weapon,villain);
   villainStuff=[]
   var result="";
   Villain.getVillain(villain,function(v){
+    console.log("USER"+user);
+    Users.getUser(user,function(u){
+
+
   /*var villainStuff = {
     name:villain,
     weapon:villainWeapon,
@@ -89,38 +94,54 @@ function gameResult(weapon,villain){
     result:""
   };*/
   if(weapon="rock"){
-    v.rock+=1;
+    u.rock=parseInt(u.rock)+1;
+    console.log("ROCK ON"+u.rock)
   }
   if(weapon="paper"){
-    v.paper+=1;
+    u.paper=parseInt(u.paper)+1;
   }
   if(weapon="scissor"){
-    v.scissor+=1;
+    u.scissor=parseInt(u.scissor)+1;
+  }
+  if(villainWeapon="rock"){
+    v.rock=parseInt(v.rock)+1;
+    console.log("ROCK ON"+v.rock)
+  }
+  if(villainWeapon="paper"){
+    v.paper=parseInt(v.paper)+1;
+  }
+  if(villainWeapon="scissor"){
+    v.scissor=parseInt(v.scissor)+1;
   }
   if(villainWeapon=="rock" && weapon=="rock" || villainWeapon=="paper" && weapon=="paper" || villainWeapon=="scissors" && weapon=="scissors"){
-    v.tie+=1;
+  v.tie=parseInt(v.tie)+1;
+  u.tie=parseInt(u.tie)+1;
   result="tie";
 
   }
   if(villainWeapon=="rock" && weapon=="scissors" || villainWeapon=="paper" && weapon=="rock" || villainWeapon=="scissors" && weapon=="paper"){
-    v.win+=1;
+  v.win=parseInt(v.win)+1;
+  u.lose=parseInt(v.lose)+1;
     result="lose";
   }
   if(weapon=="rock" && villainWeapon=="scissors" || weapon=="paper" && villainWeapon=="rock" || weapon=="scissors" && villainWeapon=="paper"){
-    v.lose+=1;
+  v.lose=parseInt(v.lose)+1;
+  v.win=parseInt(v.win)+1;
       result="win";
   }
   villainStuff=[result,villainWeapon];
   Villain.updateVillain(v.name);
+  Users.updateUserStats(u.name);
+});
 });
   return villainStuff;
 }
 
 
 router.get('/user/:id/results', function(request, response){
-  console.log('Request- /'+request.params.user+'/results');
+  console.log('Request- /'+request.params.id+'/results');
   var u;
-  var r = gameResult(request.query.weapon, request.query.villain);
+  var r = gameResult(request.params.id,request.query.weapon, request.query.villain);
   var user_data={
       name: request.params.id,
       weapon: request.query.weapon,

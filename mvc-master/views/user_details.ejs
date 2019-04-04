@@ -16,8 +16,10 @@
 
     <form action="/user" method= "post">
     <br>
-    Name: <input type="text" name="name" value= "<%=user.name%>"<br>
+    Username: <input type="text" name="name" value= "<%=user.name%>"<br>
     Password: <input type="text" name="password" value="<%=user.password%>"<br>
+    First Name: <input type="text" name="firstname" value= "<%=user.firstname%>"<br>
+    Last Name: <input type="text" name="lastname" value="<%=user.lastname%>"<br>
     <button type="submit" id = "new_user_button">Submit New User</button>
   </form>
     <br>
@@ -28,10 +30,15 @@
 
       <form action="/user/<%=user.name%>?_method=PUT" method="post">
       <br>
-      Name: <input type="text" name="name" value= "<%=user.name%>"<br>
+      Username: <input type="text" name="name" value= "<%=user.name%>"<br>
       Password: <input type="text" name="password" value="<%=user.password%>"<br>
+      First Name: <input type="text" name="firstname" value= "<%=user.firstname%>"<br>
+      Last Name: <input type="text" name="lastname" value="<%=user.lastname%>"<br>
       <button type="submit" id = "update_user_button">Update User</button>
     </form>
+    <form action="/user/<%=user.name%>?_method=DELETE" method= "post">
+    <button type="submit" id = "delete_user_button">Delete User</button>
+  </form>
       <br>
       <%}%>
 

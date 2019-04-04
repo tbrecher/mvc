@@ -3,7 +3,7 @@ var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1D4cOG9jV0L0UiuK4TEYpHTGgb_tizTMk4O3Hl4VlEq4');
 
 exports.getVillain = function(villain_id, callback) {
-  console.log("Villains.getVillain: "+villain_id);
+console.log("Villain requested Villains.getVillain: "+villain_id+getTime());
     var villain = createBlankVillain();
   var all_villains = exports.allVillains(function(rows){
     for(var i=0; i<rows.length; i++){
@@ -31,11 +31,8 @@ exports.getVillain = function(villain_id, callback) {
 }
 
 exports.updateVillain = function(newV) {
-  console.log("update requested"+newV.name);
-  //exports.getVillain(newV.name, function(v){
-  //  console.log("update requested2");
+  console.log("update requested Villains.updateVillain"+newV.name+getTime());
     exports.allVillains(function(rows){
-      console.log("update requested3");
         for(var i = 0; i <rows.length; i++){
             if(rows[i].name.trim() == newV.name.trim()){
                           rows[i].name = newV.name;
@@ -53,7 +50,7 @@ exports.updateVillain = function(newV) {
                           rows[i].freq = JSON.parse(rows[i].freq)+1;
                           rows[i].save();
               }
-              console.log("update complete");
+              console.log("update complete"+getTime());
             });
 }
 
@@ -80,4 +77,12 @@ exports.allVillains= function(callback){//parameter of function is a function
      callback(rows);
    });
  });
+}
+
+function getTime(){
+  var today= new Date();
+  var date=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time=today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+  var dateTime= date+' '+time;
+  return dateTime;
 }

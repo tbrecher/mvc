@@ -4,23 +4,14 @@ var router = express.Router();
 var Users = require('../models/User');
 var Villain = require('../models/Villain');
 
-/*router.get('/user/:id', function(req, res){
-  console.log('GET Request- /user/'+req.params.id+' '+ new Date());
 
-  Users.getUser(req.params.id, function(u){
-    console.log("get User"+u);
-    res.status(200);
-    res.setHeader('Content-Type', 'text/html')
-    res.render('user_details', {user:u});
-  });
-});*/
 
 
 
 
 router.get('/user/new',function(request, response){
   console.log('Request- /new user');
-  var user=Users.createUser("new","user");
+  var user=Users.createUser("new","user","blank","blank");
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('user_details',{user:user});
@@ -28,7 +19,7 @@ router.get('/user/new',function(request, response){
 
 router.post('/user', function(request,response){
 console.log("Post- new user");
-Users.createUser(request.body.name,request.body.password);
+Users.createUser(request.body.name,request.body.password,request.body.firstname,request.body.lastname);
 response.status(200);
 response.setHeader('Content-Type', 'text/html')
 response.render('index');
@@ -160,9 +151,6 @@ router.get('/user/:id/results', function(request, response){
 
 
 
-//user.js method for new user and input parameters
-//app.put presentation
-//
 
 
 
@@ -180,9 +168,22 @@ router.put('/user/:id', function(request,response){
   var name= request.params.id;
   var u={
     name: request.body.name.trim(),
-    password: request.body.password.trim()
+    password: request.body.password.trim(),
+    firstname: request.body.firstname.trim(),
+    lastname:request.body.lastname.trim()
   }
-  Users.updateUser(name,u.name, u.password);
+  Users.updateUser(name,u.name, u.password,u.firstname,u.lastname);
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  response.render('index');
+});
+
+router.delete('/user/:id', function(request,response){
+  var name= request.params.id;
+  var u={
+    name: name
+  }
+  Users.deleteUser(u);
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('index');

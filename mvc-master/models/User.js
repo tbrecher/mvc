@@ -7,7 +7,7 @@ var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1D4cOG9jV0L0UiuK4TEYpHTGgb_tizTMk4O3Hl4VlEq4');
 
 exports.getUser = function(user_id, callback) {
-  console.log("Users.getUser: "+user_id);
+  console.log("user requested Users.getUser: "+user_id+getTime());
     var user = createBlankUser();
   var all_users = exports.allUsers(function(rows){
     for(var i=0; i<rows.length; i++){
@@ -15,13 +15,17 @@ exports.getUser = function(user_id, callback) {
         user={
           name:rows[i].name.trim(),
           password:rows[i].password.trim(),
+          firstname:rows[i].firstname.trim(),
+          lastname:rows[i].lastname.trim(),
           gamesplayed:rows[i].gamesplayed.trim(),
           lose:rows[i].lose.trim(),
           win:rows[i].win.trim(),
           tie:rows[i].tie.trim(),
           rock:rows[i].rock.trim(),
           paper:rows[i].paper.trim(),
-          scissor:rows[i].scissor.trim()
+          scissor:rows[i].scissor.trim(),
+          created:rows[i].created.trim(),
+          updated:rows[i].updated.trim()
 
         }
           console.log("right user");
@@ -37,26 +41,21 @@ exports.getUser = function(user_id, callback) {
 
 
 
-//exports.getUserbyName=function(callback){
-  //exports.getUsers(function(user_data){
-  ///  for loop
-        //callback(user_data)
-  //}
-//}
 
 
 
-exports.updateUser = function(name,user_name,password) {
-  console.log("update requested"+name);
+exports.updateUser = function(name,user_name,password,firstname,lastname) {
+  console.log("Update requested Users.updateUser"+name+getTime());
     exports.getUser(name, function(u){
-    console.log("update requested2");
     exports.allUsers(function(rows){
-      console.log("update requested3");
         for(var i = 0; i <rows.length; i++){
             if(rows[i].name.trim() == u.name.trim() && rows[i].password.trim() == u.password.trim()){
                    console.log(rows[i]);
                           rows[i].name = user_name;
                           rows[i].password = password;
+                          rows[i].firstname = firstname;
+                          rows[i].lastname= lastname;
+                          rows[i].updated=getTime();
                           if(!rows[i].freq){
                             rows[i].freq = 0;
                           }
@@ -64,17 +63,14 @@ exports.updateUser = function(name,user_name,password) {
                 rows[i].save();
               }
             }
-            console.log("update complete");
+            console.log("update complete"+getTime());
   });
 });
 }
 
 exports.updateUserStats = function(newU) {
-  console.log("update requested"+newU.name);
-//  exports.getUser(name, function(u){
-    //console.log("update requested2");
+  console.log("update requested Users.updateUserStats"+newU.name+getTime());
     exports.allUsers(function(rows){
-      console.log("update requested3");
       for(var i = 0; i <rows.length; i++){
           if(rows[i].name.trim() == newU.name.trim()){
                         rows[i].name = newU.name;
@@ -92,41 +88,43 @@ exports.updateUserStats = function(newU) {
                         rows[i].freq = JSON.parse(rows[i].freq)+1;
                         rows[i].save();
             }
-            console.log("update complete");
+            console.log("update complete"+getTime());
           });
   }
 
 
 
-  /*  var user={
-      name:user_name,
-      password: u.name,
-      gamesPlayed:u.games_played,
-      win:u.won,
-      lose:u.lost,
-      tie:u.tie,
-      rock:u.rock,
-      paper:u.paper,
-      scissors:u.scissors
-    };*/
 
-  //fill
 
-exports.deleteUser = function(user_id){
-  //fill
+exports.deleteUser = function(user){
+  console.log("delete requested Users.deleteUser"+user.name+getTime());
+    exports.allUsers(function(rows){
+      for(var i = 0; i <rows.length; i++){
+          if(rows[i].name.trim() == user.name.trim()){
+                        rows[i].del();
+                      }
+            }
+            console.log("delete complete"+getTime());
+          });
+
 }
 
-exports.createUser = function(user_name, user_password){
+exports.createUser = function(user_name, user_password,firstname,lastname){
+  console.log("Users.createUser"+user_name+getTime());
   var user={
     name:user_name,
     password: user_password,
+    firstname:firstname,
+    lastname:lastname,
     gamesPlayed:"0",
     win:"0",
     lose:"0",
     tie:"0",
     rock:"0",
     paper:"0",
-    scissor:"0"
+    scissor:"0",
+    created: getTime(),
+    updated: "Not Updated"
   };
   doc.addRow(1,user, function(err) {
     if(err) {
@@ -153,15 +151,26 @@ var createBlankUser= function(){
   var user={
     name:"",
     password:"",
+    firstname:"",
+    lastname:"",
     games_played:"0",
     lose:"0",
     win:"0",
     tie:"0",
     rock:"0",
     paper:"0",
-    scissor:"0"
+    scissor:"0",
+    created: getTime(),
+    updated: "Not Updated"
   };
   return user;
+}
+function getTime(){
+  var today= new Date();
+  var date=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time=today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+  var dateTime= date+' '+time;
+  return dateTime;
 }
 
 

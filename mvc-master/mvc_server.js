@@ -15,11 +15,9 @@ app.use(express.urlencoded());
 app.use(require('./controllers/user'));
 var Users = require(__dirname +'/models/User');
 var Villains = require(__dirname +'/models/Villain');
+var port = process.env.PORT || 8000;
+app.listen(port);
 
-var port = 3000;
-app.listen(port, function(){
-  console.log('Server started at '+ new Date()+', on port ' + port+'!');
-});
 
 app.get('/', function(request, response){
   console.log('Request- default route');

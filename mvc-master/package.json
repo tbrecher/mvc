@@ -1,7 +1,6 @@
 {
   "name": "mvc-master",
   "version": "1.0.0",
-  "description": "",
   "main": "mvc_server.js",
   "dependencies": {
     "ejs": "^2.6.1",
@@ -18,5 +17,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }

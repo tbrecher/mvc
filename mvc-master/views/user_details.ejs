@@ -34,6 +34,8 @@
       Password: <input type="text" name="password" value="<%=user.password%>"<br>
       First Name: <input type="text" name="firstname" value= "<%=user.firstname%>"<br>
       Last Name: <input type="text" name="lastname" value="<%=user.lastname%>"<br>
+      Last Updated: <input type="text" name="updated" value="<%=user.updated%>"<br>
+      Created: <input type="text" name="created" value="<%=user.created%>"<br>
       <button type="submit" id = "update_user_button">Update User</button>
     </form>
     <form action="/user/<%=user.name%>?_method=DELETE" method= "post">
